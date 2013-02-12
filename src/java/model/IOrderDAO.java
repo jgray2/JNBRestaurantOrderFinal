@@ -6,9 +6,9 @@ import java.util.List;
  *
  * @author Jenni Burgmeier
  */
-public interface IOrderEAO {
+public interface IOrderDAO {
 
-    void create(Order order);
+    void create();
 
     void deleteById(Long id);
 

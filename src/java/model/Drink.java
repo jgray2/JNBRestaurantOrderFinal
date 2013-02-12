@@ -1,28 +1,22 @@
 
 package model;
 
-import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 
 /**
  *
  * @author Jenni Burgmeier
  */
-@Entity
-@NamedQuery(name = "findDrinks", query = "SELECT d FROM Drink d")
-public class Drink implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column(nullable = false)
+
+public class Drink {
+    
     private String name;
     private double price;
+    private double waterP = 0;
+    private double beerP = 3.50;
+    private double sodaP = 1.75;
+    private final String type1 = "Water";
+    private final String type2 = "Beer";
+    private final String type3 = "Soda";
 
     public Drink() {
     }
@@ -32,15 +26,6 @@ public class Drink implements Serializable {
         this.price = price;
     }
     
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -50,6 +35,13 @@ public class Drink implements Serializable {
     }
 
     public double getPrice() {
+        if (name.equals(type1)){
+            price = waterP;
+        } else if (name.equals(type2)){
+            price = beerP;
+        } else {
+            price = sodaP;
+        }    
         return price;
     }
 
@@ -59,19 +51,21 @@ public class Drink implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 73 * hash + (this.name != null ? this.name.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Drink)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Drink other = (Drink) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Drink other = (Drink) obj;
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
             return false;
         }
         return true;
@@ -79,7 +73,9 @@ public class Drink implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Drink[ id=" + id + " ]";
+        return "Drink{" + "name=" + name + ", price=" + price + '}';
     }
+
+   
     
 }

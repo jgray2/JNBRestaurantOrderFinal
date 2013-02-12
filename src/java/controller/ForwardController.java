@@ -38,29 +38,28 @@ private static final String destination = "/result.jsp";
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
-        OrderService order = new OrderService();
-        Server server = new Server();
+        OrderService orderService = new OrderService();
+        orderService.createOrder();
+        orderService.getOrder().getDrink().setName(request.getParameter("drink"));
+        orderService.getOrder().getEntree().setEntreeName(request.getParameter("entree"));
+        orderService.getOrder().getSide().setName(request.getParameter("side"));
         
-        server.setEntree(request.getParameter("entree"));
-        server.setSide(request.getParameter("side"));
-        server.setDrink(request.getParameter("drink"));
+        orderService.finalizeOrder();
         
-        server.calculateOrder();
-        
-        request.setAttribute("entree", server.getEntree());
+        request.setAttribute("entree", orderService.getOrder().getEntree().getEntreeName());
         request.setAttribute("entreeCost", 
-                String.valueOf(server.getEntreeCost()));
-        request.setAttribute("side", server.getSide());
+                String.valueOf(orderService.getOrder().getEntree().getPrice()));
+        request.setAttribute("side", orderService.getOrder().getSide().getName());
         request.setAttribute("sideCost", 
-                String.valueOf(server.getSideCost()));
-        request.setAttribute("drink", server.getDrink());
+                String.valueOf(orderService.getOrder().getSide().getPrice()));
+        request.setAttribute("drink", orderService.getOrder().getDrink().getName());
         request.setAttribute("drinkCost", 
-                String.valueOf(server.getDrinkCost()));
+                String.valueOf(orderService.getOrder().getDrink().getPrice()));
         request.setAttribute("totalCost", 
-                String.valueOf(server.getTotalOrder()));
-        request.setAttribute("tax", String.valueOf (server.getTax()));
+                String.valueOf(orderService.getOrder().getTotalOrder()));
+        request.setAttribute("tax", String.valueOf (orderService.getOrder().getTax()));
         request.setAttribute("suggestedTip", 
-                String.valueOf(server.getSuggestedTip())); 
+                String.valueOf(orderService.getOrder().getSuggestedTip())); 
 //        
         RequestDispatcher dispatcher =
                 getServletContext().getRequestDispatcher(destination);

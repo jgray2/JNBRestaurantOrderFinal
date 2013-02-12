@@ -7,11 +7,12 @@ import java.util.List;
  *
  * @author Jenni Burgmeier
  */
-public class OrderEAO implements IOrderEAO {
+public class OrderDAO implements IOrderDAO {
 
+    
     @Override
-    public void create(Order order) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void create() {
+        Order order = new Order();
     }
 
     @Override

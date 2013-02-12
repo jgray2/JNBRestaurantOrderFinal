@@ -16,6 +16,9 @@ public class Order {
     private double tipPerc = 0.15;
 
     public Order() {
+       drink = new Drink();
+       side = new Side();
+       entree = new Entree();
     }
 
     public Order(Drink drink, Side side, Entree entree) {
@@ -47,5 +50,24 @@ public class Order {
     public void setEntree(Entree entree) {
         this.entree = entree;
     }    
+    
+    public final void calculateOrder () {
+        totalOrder = drink.getPrice() + entree.getPrice() + side.getPrice();
+        tax = totalOrder * taxPerc;
+        totalOrder = totalOrder + tax;
+    }
+
+    public final double getTotalOrder() {
+        return totalOrder;
+    }
+
+    public final double getTax() {
+        return tax;
+    }
+
+    public final double getSuggestedTip() {
+        suggestedTip = totalOrder * tipPerc;
+        return suggestedTip;
+    }
     
 }
