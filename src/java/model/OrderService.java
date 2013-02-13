@@ -8,13 +8,14 @@ package model;
  */
 public class OrderService {
     private Order order;
-    private IOrderDAO dao = new OrderDAO();
+    private IOrderDAO dao;
     private String nameD;
     private String nameE;
     private String nameS;
 
     public void createOrder() {
-        dao.create(); 
+        order = new Order();
+//        dao.create();   write to db
     }
     public void finalizeOrder() {
         order.calculateOrder();
